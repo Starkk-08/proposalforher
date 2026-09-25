@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Something</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #050507;
+            color: #f8eef2;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        #stars {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ff4fa3;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #ff4fa3;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .screen {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .content {
+            max-width: 700px;
+        }
+
+        .small {
+            font-size: 15px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #d982aa;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 7vw, 72px);
+            font-weight: normal;
+            line-height: 1.15;
+            margin: 0 0 25px;
+        }
+
+        p {
+            font-size: clamp(18px, 2.5vw, 24px);
+            line-height: 1.8;
+            color: #eadde2;
+            margin: 15px 0;
+        }
+
+        .highlight {
+            color: #ff4fa3;
+        }
+
+        .wine {
+            color: #a62b55;
+        }
+
+        button {
+            margin-top: 35px;
+            padding: 13px 28px;
+            border: 1px solid #8d2850;
+            border-radius: 30px;
+            background: rgba(122, 22, 56, 0.18);
+            color: #fff;
+            font-size: 16px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #7a1638;
+            box-shadow: 0 0 25px rgba(255, 79, 163, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .proposal {
+            font-size: clamp(38px, 7vw, 68px);
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .choice {
+            min-width: 130px;
+            font-size: 18px;
+        }
+
+        .yes {
+            background: #7a1638;
+            border-color: #a62b55;
+        }
+
+        .no {
+            background: transparent;
+        }
+
+        .physics {
+            margin-top: 30px;
+            color: #ff4fa3;
+            font-size: 22px;
+        }
+
+        .fade-line {
+            opacity: 0;
+            animation: appear 1.5s forwards;
+        }
+
+        @keyframes appear {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            p {
+                font-size: 18px;
+            }
+
+            .content {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<!-- SCREEN 1 -->
+<section class="screen active" id="screen1">
+    <div class="content">
+        <div class="small">A little something</div>
+
+        <h1>I made something for you.</h1>
+
+        <p>Don't worry...</p>
+        <p class="highlight">It's not a physics question.</p>
+
+        <button onclick="nextScreen(2)">Continue →</button>
+    </div>
+</section>
+
+
+<!-- SCREEN 2 -->
+<section class="screen" id="screen2">
+    <div class="content">
+
+        <p>There's something I've been wanting to tell you.</p>
+
+        <button onclick="nextScreen(3)">Continue →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 3 -->
+<section class="screen" id="screen3">
+    <div class="content">
+
+        <p>We haven't known each other for very long.</p>
+
+        <p>
+            If you actually count the time we've spent together...
+        </p>
+
+        <p class="wine">
+            it's barely a few hours.
+        </p>
+
+        <button onclick="nextScreen(4)">Continue →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 4 -->
+<section class="screen" id="screen4">
+    <div class="content">
+
+        <p>
+            And maybe a few hours aren't enough
+            to really know someone.
+        </p>
+
+        <p>
+            I don't know all your stories yet.<br>
+            I don't know all the little things that make you happy.<br>
+            I don't know everything that makes you...
+            <span class="highlight">you.</span>
+        </p>
+
+        <button onclick="nextScreen(5)">Continue →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 5 -->
+<section class="screen" id="screen5">
+    <div class="content">
+
+        <p>But somehow...</p>
+
+        <h1 class="highlight">I really like you.</h1>
+
+        <p>
+            And I've found myself wanting to know
+            so much more about you.
+        </p>
+
+        <button onclick="nextScreen(6)">Continue →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 6 -->
+<section class="screen" id="screen6">
+    <div class="content">
+
+        <p>I want to know your random thoughts.</p>
+        <p>Your silly side.</p>
+        <p>The things you're passionate about.</p>
+        <p>The things you don't tell everyone.</p>
+
+        <p class="highlight">
+            All those little things I'll only discover with time.
+        </p>
+
+        <button onclick="nextScreen(7)">Continue →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 7 -->
+<section class="screen" id="screen7">
+    <div class="content">
+
+        <p>
+            I don't know where this goes.
+        </p>
+
+        <p>
+            And I don't want to pretend that I do.
+        </p>
+
+        <p>
+            Maybe this is a little early.<br>
+            Maybe it's a little crazy.
+        </p>
+
+        <p class="highlight">
+            But I'd rather be honest about how I feel
+            than keep wondering...
+        </p>
+
+        <h1>what if?</h1>
+
+        <button onclick="nextScreen(8)">One last thing →</button>
+
+    </div>
+</section>
+
+
+<!-- SCREEN 8 -->
+<section class="screen" id="screen8">
+    <div class="content">
+
+        <div class="small">So...</div>
+
+        <h1 class="proposal">
+            Will you be my girlfriend? ❤️
+        </h1>
+
+        <div class="buttons">
+            <button class="choice yes" onclick="answer('YES ❤️')">
+                YES ❤️
+            </button>
+
+            <button class="choice no" onclick="answer('NO')">
+                NO
+            </button>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FINAL SCREEN -->
+<section class="screen" id="finalScreen">
+    <div class="content" id="finalContent">
+    </div>
+</section>
+
+
+<script>
+
+    // Create stars
+    const starsContainer = document.getElementById("stars");
+
+    for (let i = 0; i < 90; i++) {
+
+        const star = document.createElement("div");
+
+        star.className = "star";
+
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+
+        star.style.animationDelay =
+            Math.random() * 4 + "s";
+
+        star.style.animationDuration =
+            (2 + Math.random() * 4) + "s";
+
+        starsContainer.appendChild(star);
+    }
+
+
+    // Move between screens
+    function nextScreen(number) {
+
+        document.querySelectorAll(".screen").forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+        document.getElementById("screen" + number)
+            .classList.add("active");
+    }
+
+
+    // Answer handling
+    function answer(choice) {
+
+        document.querySelectorAll(".screen").forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+        const finalScreen =
+            document.getElementById("finalScreen");
+
+        const finalContent =
+            document.getElementById("finalContent");
+
+        if (choice === "YES ❤️") {
+
+            finalContent.innerHTML = `
+                <div class="small">Okay...</div>
+
+                <h1 class="highlight">
+                    You just made me really happy. ❤️
+                </h1>
+
+                <p>
+                    I guess this means I finally get
+                    to know you properly now.
+                </p>
+
+                <p class="physics">
+                    And yes...<br>
+                    the variable-mass incident
+                    will absolutely be brought up again.
+                </p>
+
+                <p>
+                    <strong>
+                    Please don't ever write
+                    dv/dt = 0 again. 💀
+                    </strong>
+                </p>
+            `;
+
+        } else {
+
+            finalContent.innerHTML = `
+                <div class="small">Hey...</div>
+
+                <h1>It's okay. ❤️</h1>
+
+                <p>
+                    I meant everything I said on this
+                    little website.
+                </p>
+
+                <p>
+                    I'm glad I got to be honest with you,
+                    and I appreciate you being honest with me.
+                </p>
+
+                <p class="physics">
+                    And don't worry...
+                    I won't bring up
+                    dv/dt = 0 for at least 24 hours. 💀
+                </p>
+            `;
+        }
+
+        finalScreen.classList.add("active");
+
+        // Temporary placeholder.
+        // We'll connect this to your response system later.
+        console.log("Her answer:", choice);
+    }
+
+</script>
+
+</body>
+</html>
