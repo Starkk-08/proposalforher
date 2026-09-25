@@ -7,6 +7,7 @@
     <title>A Little Something</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -24,6 +25,7 @@
             color: #f8eef2;
             font-family: Georgia, "Times New Roman", serif;
         }
+
 
         /* --------------------
            STAR FIELD
@@ -343,6 +345,7 @@
                 min-width: 120px;
             }
         }
+
     </style>
 </head>
 
@@ -350,6 +353,7 @@
 <body>
 
     <!-- STAR BACKGROUND -->
+
     <div id="stars"></div>
 
 
@@ -641,7 +645,7 @@
 
         /* =========================
            CREATE STARS
-        ========================== */
+        ========================= */
 
         const stars = document.getElementById("stars");
 
@@ -673,7 +677,7 @@
 
         /* =========================
            SCREEN NAVIGATION
-        ========================== */
+        ========================= */
 
         function goTo(number) {
 
@@ -685,6 +689,7 @@
 
                 });
 
+
             const next =
                 document.getElementById("screen" + number);
 
@@ -693,10 +698,78 @@
 
 
         /* =========================
-           ANSWER
-        ========================== */
+           ANSWER + FORMSPREE
+        ========================= */
 
-        function answer(choice) {
+        async function answer(choice) {
+
+            /* Prevent accidental double-clicks */
+
+            document
+                .querySelectorAll(".choice")
+                .forEach(button => {
+
+                    button.disabled = true;
+                    button.style.opacity = "0.65";
+                    button.style.cursor = "default";
+
+                });
+
+
+            /* Your Formspree endpoint */
+
+            const endpoint =
+                "https://formspree.io/f/mzezvodn";
+
+
+            /* Send her answer to Formspree */
+
+            try {
+
+                await fetch(endpoint, {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        answer: choice,
+
+                        message:
+                            choice === "YES"
+                                ? "She chose YES ❤️"
+                                : "She chose NO"
+
+                    })
+
+                });
+
+                console.log(
+                    "Her answer was successfully sent:",
+                    choice
+                );
+
+            } catch (error) {
+
+                /*
+                    Even if Formspree fails,
+                    the website will still show
+                    the appropriate ending.
+                */
+
+                console.error(
+                    "Could not send response:",
+                    error
+                );
+
+            }
+
+
+            /* Hide all previous screens */
 
             document
                 .querySelectorAll(".screen")
@@ -707,12 +780,18 @@
                 });
 
 
+            /* Get final screen */
+
             const finalScreen =
                 document.getElementById("finalScreen");
 
             const finalContent =
                 document.getElementById("finalContent");
 
+
+            /* =========================
+               YES ENDING
+            ========================= */
 
             if (choice === "YES") {
 
@@ -759,7 +838,14 @@
 
                 `;
 
-            } else {
+            }
+
+
+            /* =========================
+               NO ENDING
+            ========================= */
+
+            else {
 
                 finalContent.innerHTML = `
 
@@ -796,22 +882,14 @@
                     </p>
 
                 `;
+
             }
 
 
+            /* Show final screen */
+
             finalScreen.classList.add("active");
 
-
-            /*
-                RESPONSE SYSTEM
-                ----------------
-                We'll connect this later.
-
-                For now, the answer is only stored
-                temporarily in the browser console.
-            */
-
-            console.log("Her answer:", choice);
         }
 
     </script>
